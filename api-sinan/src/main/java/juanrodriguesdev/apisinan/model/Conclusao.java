@@ -22,5 +22,5 @@ public class Conclusao {
     private String evolucaoCaso;
     private LocalDate dataObito;
     private LocalDate dataEncerramento;
-    
+
 }
