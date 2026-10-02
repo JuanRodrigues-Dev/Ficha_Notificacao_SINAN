@@ -1,10 +1,12 @@
 package juanrodriguesdev.apisinan.service;
 
 import jakarta.transaction.Transactional;
+import juanrodriguesdev.apisinan.exeption.ResourceNotFoundException;
 import juanrodriguesdev.apisinan.model.Notificacao;
 import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NotificacaoService {
@@ -20,5 +22,25 @@ public class NotificacaoService {
         return repository.save(notificacao);
     }
 
-    
+    public Notificacao buscarPorId(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
+    }
+
+    public List<Notificacao> listarTodos() {
+        return repository.findAll();
+    }
+
+    @Transactional
+    public Notificacao atualizar(Long id ,  Notificacao dadosAtualizados) {
+        buscarPorId(id);
+        dadosAtualizados.setId(id);
+        return repository.save(dadosAtualizados);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        Notificacao notificacao = buscarPorId(id);
+        repository.delete(notificacao);
+
+    }
 }
