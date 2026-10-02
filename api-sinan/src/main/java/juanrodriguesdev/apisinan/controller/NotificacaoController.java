@@ -48,5 +48,5 @@ public class NotificacaoController {
         service.deletar(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    
+
 }
