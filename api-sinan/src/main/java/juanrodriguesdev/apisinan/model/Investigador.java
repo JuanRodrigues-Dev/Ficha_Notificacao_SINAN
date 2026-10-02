@@ -21,5 +21,5 @@ public class Investigador {
     private String municipioUnidadeSaude;
     private String nomeInvestigador;
     private String funcao;
-    
+
 }
