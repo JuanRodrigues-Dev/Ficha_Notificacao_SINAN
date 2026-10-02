@@ -1,13 +1,12 @@
 package juanrodriguesdev.apisinan.controller;
 
+import jakarta.validation.Valid;
 import juanrodriguesdev.apisinan.model.Notificacao;
 import juanrodriguesdev.apisinan.service.NotificacaoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,6 +29,17 @@ public class NotificacaoController {
         return ResponseEntity.ok(notificacao);
     }
 
-    
+    @PostMapping
+    public ResponseEntity<Notificacao> criar(@Valid @RequestBody Notificacao notificacao) {
+        Notificacao criada = service.criar(notificacao);
+        return ResponseEntity.created(URI.create("/notificacao/" + criada.getId())).body(criada);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Notificacao> atualizar(@PathVariable Long id, @Valid @RequestBody Notificacao notificacao) {
+        Notificacao atualizada = service.atualizar(id, notificacao);
+        return ResponseEntity.ok(atualizada);
+    }
+
+    
 }
