@@ -24,7 +24,7 @@ public class DadosPessoais {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
     @Enumerated(EnumType.STRING)
-    private Gestante gestante; 
+    private Gestante gestante;
 
     private String nomeMae;
 
