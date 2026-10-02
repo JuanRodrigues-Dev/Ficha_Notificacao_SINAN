@@ -3,6 +3,8 @@ package juanrodriguesdev.apisinan.controller;
 import jakarta.validation.Valid;
 import juanrodriguesdev.apisinan.model.Notificacao;
 import juanrodriguesdev.apisinan.service.NotificacaoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +43,10 @@ public class NotificacaoController {
         return ResponseEntity.ok(atualizada);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
     
 }
