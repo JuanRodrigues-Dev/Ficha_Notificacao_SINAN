@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notficacao")
+@RequestMapping("/notificacao")
 public class NotificacaoController {
     private final NotificacaoService service;
 

@@ -2,6 +2,8 @@ package juanrodriguesdev.apisinan.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +20,13 @@ public class DadosPessoais {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dataPrimeiroSintomas;
+    @NotBlank(message = "O nome do paciente é obrigatório")
     private String nomePaciente;
+
+
     private LocalDate dataNascimento;
-    private int idade;
-    @Enumerated(EnumType.STRING)
+    private Integer idade;
+    @NotNull(message = "O sexo do paciente é obrigatório")
     private Sexo sexo;
     @Enumerated(EnumType.STRING)
     private Gestante gestante;
