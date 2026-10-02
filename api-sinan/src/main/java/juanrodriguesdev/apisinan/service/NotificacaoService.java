@@ -26,7 +26,7 @@ public class NotificacaoService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
     }
 
-    public List<Notificacao> listarTodos() {
+    public List<Notificacao> listarTodas() {
         return repository.findAll();
     }
 
