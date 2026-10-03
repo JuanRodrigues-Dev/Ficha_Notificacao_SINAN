@@ -91,4 +91,8 @@ public class NotificacaoService {
             }
         }
     }
+    public List<Notificacao> buscarDuplicadas() {
+        List<Long> ids = repository.buscarIdsDuplicados();
+        return repository.findAllById(ids);
+    }
 }
