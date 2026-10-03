@@ -1,6 +1,7 @@
 package juanrodriguesdev.apisinan.service;
 
 import jakarta.transaction.Transactional;
+import juanrodriguesdev.apisinan.dto.DadosPessoaisRequestDTO;
 import juanrodriguesdev.apisinan.exception.BusinessRuleException;
 import juanrodriguesdev.apisinan.exception.ResourceNotFoundException;
 import juanrodriguesdev.apisinan.model.DadosPessoais;
@@ -117,4 +118,17 @@ public class NotificacaoService {
         List<Long> ids = repository.buscarIdsDuplicados();
         return repository.findAllById(ids);
     }
+
+    private DadosPessoais toEntity(DadosPessoaisRequestDTO dto) {
+        DadosPessoais dp = new DadosPessoais();
+        dp.setDataPrimeiroSintomas(dto.dataPrimeiroSintomas());
+        dp.setNomePaciente(dto.nomePaciente());
+        dp.setDataNascimento(dto.dataNascimento());
+        dp.setIdade(dto.idade());
+        dp.setSexo(dto.sexo());
+        dp.setGestante(dto.gestante());
+        dp.setNomeMae(dto.nomeMae());
+        return dp;
+    }
+    
 }
