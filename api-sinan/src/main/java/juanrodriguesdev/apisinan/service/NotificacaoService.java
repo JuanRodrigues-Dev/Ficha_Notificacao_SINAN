@@ -1,7 +1,7 @@
 package juanrodriguesdev.apisinan.service;
 
 import jakarta.transaction.Transactional;
-import juanrodriguesdev.apisinan.exeption.ResourceNotFoundException;
+import juanrodriguesdev.apisinan.exception.ResourceNotFoundException;
 import juanrodriguesdev.apisinan.model.Notificacao;
 import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
 import org.springframework.stereotype.Service;

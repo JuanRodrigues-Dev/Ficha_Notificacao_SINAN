@@ -1,6 +1,5 @@
 package juanrodriguesdev.apisinan.exception;
 
-import juanrodriguesdev.apisinan.exeption.ResourceNotFoundException;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,5 +32,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .map(fe -> fe.getField() + ": " + fe.getDefaultMessage())
                 .toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(pd);
+    }
+    
+    @ExceptionHandler(BusinessRuleException.class)
+    public ProblemDetail tratarRegraDeNegocio(BusinessRuleException ex) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
+        pd.setTitle("Violação de regra de negócio");
+        pd.setType(URI.create("https://api.sinan.local/erros/regra-de-negocio"));
+        return pd;
     }
 }
