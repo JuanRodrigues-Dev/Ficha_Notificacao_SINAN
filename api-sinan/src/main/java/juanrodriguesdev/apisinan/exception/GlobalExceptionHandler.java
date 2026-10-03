@@ -33,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(pd);
     }
-    
+
     @ExceptionHandler(BusinessRuleException.class)
     public ProblemDetail tratarRegraDeNegocio(BusinessRuleException ex) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
