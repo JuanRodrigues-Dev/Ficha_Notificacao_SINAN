@@ -17,7 +17,7 @@ public class Conclusao {
     private Long id;
 
     private LocalDate dataInvestigacao;
-    private String classifcacaoFinal;
+    private String classificacaoFinal;
     private String criterioConfirmacao;
     private String evolucaoCaso;
     private LocalDate dataObito;

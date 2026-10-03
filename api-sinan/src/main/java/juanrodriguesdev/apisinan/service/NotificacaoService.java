@@ -2,6 +2,7 @@ package juanrodriguesdev.apisinan.service;
 
 import jakarta.transaction.Transactional;
 import juanrodriguesdev.apisinan.dto.DadosPessoaisRequestDTO;
+import juanrodriguesdev.apisinan.dto.NotificacaoRequestDTO;
 import juanrodriguesdev.apisinan.exception.BusinessRuleException;
 import juanrodriguesdev.apisinan.exception.ResourceNotFoundException;
 import juanrodriguesdev.apisinan.model.DadosPessoais;
@@ -25,22 +26,43 @@ public class NotificacaoService {
 
     }
 
+    // ---------- CRUD ----------
+
     @Transactional
-    public Notificacao criar(Notificacao notificacao) {
+    public Notificacao criar(NotificacaoRequestDTO dto) {
+        Notificacao notificacao = toEntity(dto);
         validarRegrasdeNegocio(notificacao);
         return repository.save(notificacao);
     }
 
     public Notificacao buscarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
     }
 
-    // Versão sem filtros - retorna tudo
+
+    @Transactional
+    public Notificacao atualizar(Long id ,  NotificacaoRequestDTO dto) {
+        buscarPorId(id);
+        Notificacao notificacao = toEntity(dto);
+        notificacao.setId(id);
+        validarRegrasdeNegocio(notificacao);
+        return repository.save(notificacao);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        Notificacao notificacao = buscarPorId(id);
+        repository.delete(notificacao);
+
+    }
+
+    // ---------- Listagem / filtros ----------
+
     public List<Notificacao> listar() {
         return repository.findAll();
     }
 
-    // Versão com filtros - usa Specification pra montar a query dinamicamente
     public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
                                     String municipioNotificacao, Sexo sexo, LocalDate dataNotificacaoInicio,
                                     LocalDate dataNotificacaoFim) {
@@ -55,20 +77,14 @@ public class NotificacaoService {
         return repository.findAll(spec);
     }
 
-    @Transactional
-    public Notificacao atualizar(Long id ,  Notificacao dadosAtualizados) {
-        buscarPorId(id);
-        dadosAtualizados.setId(id);
-        validarRegrasdeNegocio(dadosAtualizados);
-        return repository.save(dadosAtualizados);
+    // ---------- RN01: duplicidade ----------
+
+    public List<Notificacao> buscarDuplicadas() {
+        List<Long> ids = repository.buscarIdsDuplicados();
+        return repository.findAllById(ids);
     }
 
-    @Transactional
-    public void deletar(Long id) {
-        Notificacao notificacao = buscarPorId(id);
-        repository.delete(notificacao);
-
-    }
+    // ---------- RN02 / RN03: obrigatoriedade condicional ----------
 
     private void validarRegrasdeNegocio(Notificacao notificacao) {
         validarIdadeOuDataNascimento(notificacao.getDadosPessoais());
@@ -114,10 +130,6 @@ public class NotificacaoService {
     private boolean estaVazio(String texto) {
         return texto == null || texto.isBlank();
     }
-    public List<Notificacao> buscarDuplicadas() {
-        List<Long> ids = repository.buscarIdsDuplicados();
-        return repository.findAllById(ids);
-    }
 
     private DadosPessoais toEntity(DadosPessoaisRequestDTO dto) {
         DadosPessoais dp = new DadosPessoais();
@@ -130,5 +142,7 @@ public class NotificacaoService {
         dp.setNomeMae(dto.nomeMae());
         return dp;
     }
-    
+
+    // ---------- mapeamento DTO -> entidade ----------
+
 }
