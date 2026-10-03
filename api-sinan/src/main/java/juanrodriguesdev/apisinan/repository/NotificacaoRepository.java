@@ -3,13 +3,14 @@ package juanrodriguesdev.apisinan.repository;
 import jdk.jfr.Registered;
 import juanrodriguesdev.apisinan.model.Notificacao;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface NotificacaoRepository  extends JpaRepository<Notificacao, Long> {
+public interface NotificacaoRepository  extends JpaRepository<Notificacao, Long> , JpaSpecificationExecutor {
     @Query(value = """
         SELECT DISTINCT n1.id
         FROM notificacao n1

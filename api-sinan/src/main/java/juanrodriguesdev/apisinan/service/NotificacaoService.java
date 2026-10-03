@@ -72,24 +72,27 @@ public class NotificacaoService {
                     "O campo gestante é obrigatório quando o sexo do paciente é feminino (RN02)");
         }
     }
-    private void validarResidencia(DadosResidencia dr){
-        boolean resideNoBrasil = dr.getPaisResidencia() == null
-                || dr.getPaisResidencia().isBlank()
+    private void validarResidencia(DadosResidencia dr) {
+        boolean resideNoBrasil = estaVazio(dr.getPaisResidencia())
                 || dr.getPaisResidencia().equalsIgnoreCase("Brasil");
 
-        if(resideNoBrasil){
-            if (dr.getUfResidencia() == null || dr.getUfResidencia().isBlank()) {
+        if (resideNoBrasil) {
+            if (estaVazio(dr.getUfResidencia())) {
                 throw new BusinessRuleException(
                         "UF de residência é obrigatória para pacientes residentes no Brasil (RN03)");
             }
-            if (dr.getMunicipioResidencia() == null || dr.getMunicipioResidencia().isBlank()) {
+            if (estaVazio(dr.getMunicipioResidencia())) {
                 throw new BusinessRuleException(
                         "Município de residência é obrigatório quando a UF é informada (RN03)");
-            }else if (dr.getPaisResidencia().isBlank()) {
-                throw new BusinessRuleException(
-                        "País de residência é obrigatório para pacientes que não residem no Brasil (RN03)");
             }
+        } else if (estaVazio(dr.getPaisResidencia())) {
+            throw new BusinessRuleException(
+                    "País de residência é obrigatório para pacientes que não residem no Brasil (RN03)");
         }
+    }
+
+    private boolean estaVazio(String texto) {
+        return texto == null || texto.isBlank();
     }
     public List<Notificacao> buscarDuplicadas() {
         List<Long> ids = repository.buscarIdsDuplicados();
