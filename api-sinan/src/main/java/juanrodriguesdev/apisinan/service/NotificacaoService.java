@@ -8,6 +8,8 @@ import juanrodriguesdev.apisinan.model.DadosResidencia;
 import juanrodriguesdev.apisinan.model.Notificacao;
 import juanrodriguesdev.apisinan.model.Sexo;
 import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
+import juanrodriguesdev.apisinan.specification.NotificacaoSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +33,11 @@ public class NotificacaoService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
     }
 
-    public List<Notificacao> listarTodas() {
+    public List<Notificacao> listarTodas(String agravo,String nomePaciente, String ufResidencia) {
+        Specification<Notificacao> spec = Specification
+                .where(NotificacaoSpecification.comAgravo(agravo))
+                .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
+                .and(NotificacaoSpecification.comUfResidencia(ufResidencia));
         return repository.findAll();
     }
 
