@@ -1,17 +1,16 @@
 package juanrodriguesdev.apisinan.service;
 
 import jakarta.transaction.Transactional;
+import juanrodriguesdev.apisinan.dto.*;
 import juanrodriguesdev.apisinan.exception.BusinessRuleException;
 import juanrodriguesdev.apisinan.exception.ResourceNotFoundException;
-import juanrodriguesdev.apisinan.model.DadosPessoais;
-import juanrodriguesdev.apisinan.model.DadosResidencia;
-import juanrodriguesdev.apisinan.model.Notificacao;
-import juanrodriguesdev.apisinan.model.Sexo;
+import juanrodriguesdev.apisinan.model.*;
 import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
 import juanrodriguesdev.apisinan.specification.NotificacaoSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -23,37 +22,28 @@ public class NotificacaoService {
 
     }
 
+    // ---------- CRUD ----------
+
     @Transactional
-    public Notificacao criar(Notificacao notificacao) {
+    public Notificacao criar(NotificacaoRequestDTO dto) {
+        Notificacao notificacao = toEntity(dto);
         validarRegrasdeNegocio(notificacao);
         return repository.save(notificacao);
     }
 
     public Notificacao buscarPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
     }
 
-    // Versão sem filtros - retorna tudo
-    public List<Notificacao> listar() {
-        return repository.findAll();
-    }
-
-    // Versão com filtros - usa Specification pra montar a query dinamicamente
-    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia) {
-        Specification<Notificacao> spec = Specification.<Notificacao>unrestricted()
-                .and(NotificacaoSpecification.comAgravo(agravo))
-                .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
-                .and(NotificacaoSpecification.comUfResidencia(ufResidencia));
-
-        return repository.findAll(spec);
-    }
 
     @Transactional
-    public Notificacao atualizar(Long id ,  Notificacao dadosAtualizados) {
+    public Notificacao atualizar(Long id ,  NotificacaoRequestDTO dto) {
         buscarPorId(id);
-        dadosAtualizados.setId(id);
-        validarRegrasdeNegocio(dadosAtualizados);
-        return repository.save(dadosAtualizados);
+        Notificacao notificacao = toEntity(dto);
+        notificacao.setId(id);
+        validarRegrasdeNegocio(notificacao);
+        return repository.save(notificacao);
     }
 
     @Transactional
@@ -62,6 +52,35 @@ public class NotificacaoService {
         repository.delete(notificacao);
 
     }
+
+    // ---------- Listagem / filtros ----------
+
+    public List<Notificacao> listar() {
+        return repository.findAll();
+    }
+
+    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
+                                    String municipioNotificacao, Sexo sexo, LocalDate dataNotificacaoInicio,
+                                    LocalDate dataNotificacaoFim) {
+        Specification<Notificacao> spec = Specification.<Notificacao>unrestricted()
+                .and(NotificacaoSpecification.comAgravo(agravo))
+                .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
+                .and(NotificacaoSpecification.comUfResidencia(ufResidencia))
+                .and(NotificacaoSpecification.comMunicipioNotificacao(municipioNotificacao))
+                .and(NotificacaoSpecification.comSexo(sexo))
+                .and(NotificacaoSpecification.comDataNotificacaoEntre(dataNotificacaoInicio, dataNotificacaoFim));
+
+        return repository.findAll(spec);
+    }
+
+    // ---------- RN01: duplicidade ----------
+
+    public List<Notificacao> buscarDuplicadas() {
+        List<Long> ids = repository.buscarIdsDuplicados();
+        return repository.findAllById(ids);
+    }
+
+    // ---------- RN02 / RN03: obrigatoriedade condicional ----------
 
     private void validarRegrasdeNegocio(Notificacao notificacao) {
         validarIdadeOuDataNascimento(notificacao.getDadosPessoais());
@@ -107,8 +126,67 @@ public class NotificacaoService {
     private boolean estaVazio(String texto) {
         return texto == null || texto.isBlank();
     }
-    public List<Notificacao> buscarDuplicadas() {
-        List<Long> ids = repository.buscarIdsDuplicados();
-        return repository.findAllById(ids);
+
+    // ---------- mapeamento DTO -> entidade ----------
+
+    private Notificacao toEntity(NotificacaoRequestDTO dto) {
+        Notificacao notificacao = new Notificacao();
+        notificacao.setAgravo(dto.agravo());
+        notificacao.setDataNotificacao(dto.dataNotificacao());
+        notificacao.setUfNotificacao(dto.ufNotificacao());
+        notificacao.setMunicipioNotificacao(dto.municipioNotificacao());
+        notificacao.setUnidadeSaude(dto.unidadeSaude());
+        notificacao.setDadosPessoais(toEntity(dto.dadosPessoais()));
+        notificacao.setDadosResidencia(toEntity(dto.dadosResidencia()));
+        notificacao.setConclusao(dto.conclusao() != null ? toEntity(dto.conclusao()) : null);
+        notificacao.setInvestigador(dto.investigador() != null ? toEntity(dto.investigador()) : null);
+        return notificacao;
+    }
+
+    private DadosPessoais toEntity(DadosPessoaisRequestDTO dto) {
+        DadosPessoais dp = new DadosPessoais();
+        dp.setDataPrimeiroSintomas(dto.dataPrimeiroSintomas());
+        dp.setNomePaciente(dto.nomePaciente());
+        dp.setDataNascimento(dto.dataNascimento());
+        dp.setIdade(dto.idade());
+        dp.setSexo(dto.sexo());
+        dp.setGestante(dto.gestante());
+        dp.setNomeMae(dto.nomeMae());
+        return dp;
+    }
+
+    private DadosResidencia toEntity(DadosResidenciaRequestDTO dto) {
+        DadosResidencia dr = new DadosResidencia();
+        dr.setUfResidencia(dto.ufResidencia());
+        dr.setMunicipioResidencia(dto.municipioResidencia());
+        dr.setPaisResidencia(dto.paisResidencia());
+        dr.setDistrito(dto.distrito());
+        dr.setBairro(dto.bairro());
+        dr.setLogradouro(dto.logradouro());
+        dr.setNumero(dto.numero());
+        dr.setComplemento(dto.complemento());
+        dr.setCep(dto.cep());
+        dr.setTelefone(dto.telefone());
+        return dr;
+    }
+
+    private Conclusao toEntity(ConclusaoRequestDTO dto) {
+        Conclusao c = new Conclusao();
+        c.setDataInvestigacao(dto.dataInvestigacao());
+        c.setClassificacaoFinal(dto.classificacaoFinal());
+        c.setCriterioConfirmacao(dto.criterioConfirmacao());
+        c.setEvolucaoCaso(dto.evolucaoCaso());
+        c.setDataObito(dto.dataObito());
+        c.setDataEncerramento(dto.dataEncerramento());
+        return c;
+    }
+
+    private Investigador toEntity(InvestigadorRequestDTO dto) {
+        Investigador inv = new Investigador();
+        inv.setCodUnidadeSaude(dto.codUnidadeSaude());
+        inv.setMunicipioUnidadeSaude(dto.municipioUnidadeSaude());
+        inv.setNomeInvestigador(dto.nomeInvestigador());
+        inv.setFuncao(dto.funcao());
+        return inv;
     }
 }
