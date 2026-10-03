@@ -11,7 +11,12 @@ INSERT INTO dados_residencia (id, uf_residencia, municipio_residencia) VALUES
                                                                            (3, 'PB', 'Sousa');
 
 -- Notificações (referenciando os ids acima)
-INSERT INTO notificacao (id, agravo, data_notificacao, uf_notificacao, municipio_notificacao, unidade_saude, dados_pessoais_id, dados_residencia_id) VALUES
-                                                                                                                                                         (1, 'Dengue', '2026-09-10', 'PB', 'Cajazeiras', 'UPA Central', 1, 1),
+INSERT INTO notificacao (id, agravo, data_notificacao, uf_notificacao, municipio_notificacao,
+                         unidade_saude, dados_pessoais_id, dados_residencia_id)
+VALUES     (1, 'Dengue', '2026-09-10', 'PB', 'Cajazeiras', 'UPA Central', 1, 1),
                                                                                                                                                          (2, 'Dengue', '2026-09-12', 'PB', 'Cajazeiras', 'Hospital Regional', 2, 2),
                                                                                                                                                          (3, 'Chikungunya', '2026-09-15', 'PB', 'Sousa', 'UBS Sousa', 3, 3);
+
+ALTER TABLE dados_pessoais ALTER COLUMN id RESTART WITH 100;
+ALTER TABLE dados_residencia ALTER COLUMN id RESTART WITH 100;
+ALTER TABLE notificacao ALTER COLUMN id RESTART WITH 100;

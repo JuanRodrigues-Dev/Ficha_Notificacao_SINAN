@@ -1,14 +1,10 @@
 package juanrodriguesdev.apisinan.service;
 
 import jakarta.transaction.Transactional;
-import juanrodriguesdev.apisinan.dto.DadosPessoaisRequestDTO;
-import juanrodriguesdev.apisinan.dto.NotificacaoRequestDTO;
+import juanrodriguesdev.apisinan.dto.*;
 import juanrodriguesdev.apisinan.exception.BusinessRuleException;
 import juanrodriguesdev.apisinan.exception.ResourceNotFoundException;
-import juanrodriguesdev.apisinan.model.DadosPessoais;
-import juanrodriguesdev.apisinan.model.DadosResidencia;
-import juanrodriguesdev.apisinan.model.Notificacao;
-import juanrodriguesdev.apisinan.model.Sexo;
+import juanrodriguesdev.apisinan.model.*;
 import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
 import juanrodriguesdev.apisinan.specification.NotificacaoSpecification;
 import org.springframework.data.jpa.domain.Specification;
@@ -131,6 +127,22 @@ public class NotificacaoService {
         return texto == null || texto.isBlank();
     }
 
+    // ---------- mapeamento DTO -> entidade ----------
+
+    private Notificacao toEntity(NotificacaoRequestDTO dto) {
+        Notificacao notificacao = new Notificacao();
+        notificacao.setAgravo(dto.agravo());
+        notificacao.setDataNotificacao(dto.dataNotificacao());
+        notificacao.setUfNotificacao(dto.ufNotificacao());
+        notificacao.setMunicipioNotificacao(dto.municipioNotificacao());
+        notificacao.setUnidadeSaude(dto.unidadeSaude());
+        notificacao.setDadosPessoais(toEntity(dto.dadosPessoais()));
+        notificacao.setDadosResidencia(toEntity(dto.dadosResidencia()));
+        notificacao.setConclusao(dto.conclusao() != null ? toEntity(dto.conclusao()) : null);
+        notificacao.setInvestigador(dto.investigador() != null ? toEntity(dto.investigador()) : null);
+        return notificacao;
+    }
+
     private DadosPessoais toEntity(DadosPessoaisRequestDTO dto) {
         DadosPessoais dp = new DadosPessoais();
         dp.setDataPrimeiroSintomas(dto.dataPrimeiroSintomas());
@@ -143,6 +155,38 @@ public class NotificacaoService {
         return dp;
     }
 
-    // ---------- mapeamento DTO -> entidade ----------
+    private DadosResidencia toEntity(DadosResidenciaRequestDTO dto) {
+        DadosResidencia dr = new DadosResidencia();
+        dr.setUfResidencia(dto.ufResidencia());
+        dr.setMunicipioResidencia(dto.municipioResidencia());
+        dr.setPaisResidencia(dto.paisResidencia());
+        dr.setDistrito(dto.distrito());
+        dr.setBairro(dto.bairro());
+        dr.setLogradouro(dto.logradouro());
+        dr.setNumero(dto.numero());
+        dr.setComplemento(dto.complemento());
+        dr.setCep(dto.cep());
+        dr.setTelefone(dto.telefone());
+        return dr;
+    }
 
+    private Conclusao toEntity(ConclusaoRequestDTO dto) {
+        Conclusao c = new Conclusao();
+        c.setDataInvestigacao(dto.dataInvestigacao());
+        c.setClassificacaoFinal(dto.classificacaoFinal());
+        c.setCriterioConfirmacao(dto.criterioConfirmacao());
+        c.setEvolucaoCaso(dto.evolucaoCaso());
+        c.setDataObito(dto.dataObito());
+        c.setDataEncerramento(dto.dataEncerramento());
+        return c;
+    }
+
+    private Investigador toEntity(InvestigadorRequestDTO dto) {
+        Investigador inv = new Investigador();
+        inv.setCodUnidadeSaude(dto.codUnidadeSaude());
+        inv.setMunicipioUnidadeSaude(dto.municipioUnidadeSaude());
+        inv.setNomeInvestigador(dto.nomeInvestigador());
+        inv.setFuncao(dto.funcao());
+        return inv;
+    }
 }
