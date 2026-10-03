@@ -45,7 +45,8 @@ public class NotificacaoSpecification {
                 cb.equal(cb.lower(root.get("municipioNotificacao")), municipio.toLowerCase().trim());
     }
 
-    public static Specification<Notificacao> comSexo(Sexo sexo) {
+    public static
+    Specification<Notificacao> comSexo(Sexo sexo) {
         if (sexo == null) {
             return Specification.unrestricted();
         }

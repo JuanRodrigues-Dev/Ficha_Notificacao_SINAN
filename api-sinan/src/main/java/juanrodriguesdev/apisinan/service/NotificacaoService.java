@@ -12,6 +12,7 @@ import juanrodriguesdev.apisinan.specification.NotificacaoSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -39,11 +40,16 @@ public class NotificacaoService {
     }
 
     // Versão com filtros - usa Specification pra montar a query dinamicamente
-    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia) {
+    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
+                                    String municipioNotificacao, Sexo sexo, LocalDate dataNotificacaoInicio,
+                                    LocalDate dataNotificacaoFim) {
         Specification<Notificacao> spec = Specification.<Notificacao>unrestricted()
                 .and(NotificacaoSpecification.comAgravo(agravo))
                 .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
-                .and(NotificacaoSpecification.comUfResidencia(ufResidencia));
+                .and(NotificacaoSpecification.comUfResidencia(ufResidencia))
+                .and(NotificacaoSpecification.comMunicipioNotificacao(municipioNotificacao))
+                .and(NotificacaoSpecification.comSexo(sexo))
+                .and(NotificacaoSpecification.comDataNotificacaoEntre(dataNotificacaoInicio, dataNotificacaoFim));
 
         return repository.findAll(spec);
     }
