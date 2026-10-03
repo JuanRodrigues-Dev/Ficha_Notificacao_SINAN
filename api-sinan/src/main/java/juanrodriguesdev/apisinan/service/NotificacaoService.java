@@ -23,6 +23,7 @@ public class NotificacaoService {
 
     @Transactional
     public Notificacao criar(Notificacao notificacao) {
+        validarRegrasdeNegocio(notificacao);
         return repository.save(notificacao);
     }
 
@@ -38,6 +39,7 @@ public class NotificacaoService {
     public Notificacao atualizar(Long id ,  Notificacao dadosAtualizados) {
         buscarPorId(id);
         dadosAtualizados.setId(id);
+        validarRegrasdeNegocio(dadosAtualizados);
         return repository.save(dadosAtualizados);
     }
 
