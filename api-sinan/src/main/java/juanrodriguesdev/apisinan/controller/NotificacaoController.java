@@ -21,8 +21,14 @@ public class NotificacaoController {
     }
 
     @GetMapping
-    public List<Notificacao> listar(@RequestParam(required = false, defaultValue = "false") boolean duplicadas) {
-        return duplicadas ? service.buscarDuplicadas() : service.listarTodas();
+    public List<Notificacao> listar(@RequestParam(required = false) String agravo,
+                                    @RequestParam(required = false) String nomePaciente,
+                                    @RequestParam(required = false) String ufResidencia,
+                                    @RequestParam(required = false, defaultValue = "false") boolean duplicadas) {
+        if (duplicadas) {
+            return service.buscarDuplicadas();
+        }
+        return service.listar(agravo, nomePaciente, ufResidencia);
     }
 
     @GetMapping("/{id}")

@@ -33,12 +33,19 @@ public class NotificacaoService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Notificação não encontrada: id=" + id));
     }
 
-    public List<Notificacao> listarTodas(String agravo,String nomePaciente, String ufResidencia) {
-        Specification<Notificacao> spec = Specification
-                .where(NotificacaoSpecification.comAgravo(agravo))
+    // Versão sem filtros - retorna tudo
+    public List<Notificacao> listar() {
+        return repository.findAll();
+    }
+
+    // Versão com filtros - usa Specification pra montar a query dinamicamente
+    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia) {
+        Specification<Notificacao> spec = Specification.<Notificacao>unrestricted()
+                .and(NotificacaoSpecification.comAgravo(agravo))
                 .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
                 .and(NotificacaoSpecification.comUfResidencia(ufResidencia));
-        return repository.findAll();
+
+        return repository.findAll(spec);
     }
 
     @Transactional

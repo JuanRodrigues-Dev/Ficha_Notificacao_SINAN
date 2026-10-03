@@ -8,21 +8,28 @@ public class NotificacaoSpecification {
     private NotificacaoSpecification(){}
 
     public static Specification<Notificacao> comAgravo(String agravo){
-        if(!StringUtils.hasText(agravo))return null;
+        if(!StringUtils.hasText(agravo)) {
+            return Specification.unrestricted();
+        }
         return  ((root, query, cb) ->
                 cb.equal(cb.lower(root.get("agravo")), agravo.toLowerCase().trim()));
 
     }
 
     public static Specification<Notificacao> comNomePaciente(String nome){
-        if (!StringUtils.hasText(nome)) return null;
+        if (!StringUtils.hasText(nome)) {
+
+            return Specification.unrestricted();
+        }
         return (root, query, cb) ->
                 cb.like(cb.lower(root.get("dadosPessoais").get("nomePaciente")),
                         "%" + nome.toLowerCase().trim() + "%");
     }
 
     public static Specification<Notificacao> comUfResidencia(String uf){
-        if (!StringUtils.hasText(uf)) return null;
+        if (!StringUtils.hasText(uf)) {
+            return Specification.unrestricted();
+        }
         return (root, query, cb) ->
                 cb.equal(cb.lower(root.get("dadosResidencia").get("ufResidencia")), uf.toLowerCase().trim());
     }

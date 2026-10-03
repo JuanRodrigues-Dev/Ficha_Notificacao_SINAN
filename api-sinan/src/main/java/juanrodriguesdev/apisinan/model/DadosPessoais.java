@@ -27,6 +27,7 @@ public class DadosPessoais {
     private LocalDate dataNascimento;
     private Integer idade;
     @NotNull(message = "O sexo do paciente é obrigatório")
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
     @Enumerated(EnumType.STRING)
     private Gestante gestante;
