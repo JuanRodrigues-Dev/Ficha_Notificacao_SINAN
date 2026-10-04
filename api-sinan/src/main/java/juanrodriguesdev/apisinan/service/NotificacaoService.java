@@ -184,6 +184,13 @@ public class NotificacaoService {
         c.setDataInvestigacao(dto.dataInvestigacao());
         c.setClassificacaoFinal(dto.classificacaoFinal());
         c.setCriterioConfirmacao(dto.criterioConfirmacao());
+        c.setAutoctone(dto.autoctone());
+        c.setUfLocalInfeccao(dto.ufLocalInfeccao());
+        c.setPaisLocalInfeccao(dto.paisLocalInfeccao());
+        c.setMunicipioLocalInfeccao(dto.municipioLocalInfeccao());
+        c.setDistritoLocalInfeccao(dto.distritoLocalInfeccao());
+        c.setBairroLocalInfeccao(dto.bairroLocalInfeccao());
+        c.setDoencaRelacionadaTrabalho(dto.doencaRelacionadaTrabalho());
         c.setEvolucaoCaso(dto.evolucaoCaso());
         c.setDataObito(dto.dataObito());
         c.setDataEncerramento(dto.dataEncerramento());

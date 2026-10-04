@@ -39,6 +39,13 @@ function montarConclusao() {
     dataInvestigacao: valorCampo("dataInvestigacao"),
     classificacaoFinal: valorCampo("classificacaoFinal"),
     criterioConfirmacao: valorCampo("criterioConfirmacao"),
+    autoctone: valorCampo("autoctone"),
+    ufLocalInfeccao: valorCampo("ufLocalInfeccao"),
+    paisLocalInfeccao: valorCampo("paisLocalInfeccao"),
+    municipioLocalInfeccao: valorCampo("municipioLocalInfeccao"),
+    distritoLocalInfeccao: valorCampo("distritoLocalInfeccao"),
+    bairroLocalInfeccao: valorCampo("bairroLocalInfeccao"),
+    doencaRelacionadaTrabalho: valorCampo("doencaRelacionadaTrabalho"),
     evolucaoCaso: valorCampo("evolucaoCaso"),
     dataObito: valorCampo("dataObito"),
     dataEncerramento: valorCampo("dataEncerramento"),
@@ -140,6 +147,13 @@ function preencherFormulario(n) {
   document.getElementById("dataInvestigacao").value = c.dataInvestigacao ?? "";
   document.getElementById("classificacaoFinal").value = c.classificacaoFinal ?? "";
   document.getElementById("criterioConfirmacao").value = c.criterioConfirmacao ?? "";
+  document.getElementById("autoctone").value = c.autoctone ?? "";
+  document.getElementById("ufLocalInfeccao").value = c.ufLocalInfeccao ?? "";
+  document.getElementById("paisLocalInfeccao").value = c.paisLocalInfeccao ?? "";
+  document.getElementById("municipioLocalInfeccao").value = c.municipioLocalInfeccao ?? "";
+  document.getElementById("distritoLocalInfeccao").value = c.distritoLocalInfeccao ?? "";
+  document.getElementById("bairroLocalInfeccao").value = c.bairroLocalInfeccao ?? "";
+  document.getElementById("doencaRelacionadaTrabalho").value = c.doencaRelacionadaTrabalho ?? "";
   document.getElementById("evolucaoCaso").value = c.evolucaoCaso ?? "";
   document.getElementById("dataObito").value = c.dataObito ?? "";
   document.getElementById("dataEncerramento").value = c.dataEncerramento ?? "";

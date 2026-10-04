@@ -231,6 +231,50 @@
         </div>
         <div class="linha">
           <div class="campo">
+            <label for="autoctone">O caso é autóctone do município de residência?</label>
+            <select id="autoctone">
+              <option value="">Selecione</option>
+              <option value="SIM">Sim</option>
+              <option value="NAO">Não</option>
+              <option value="INDETERMINADO">Indeterminado</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="doencaRelacionadaTrabalho">Doença relacionada ao trabalho?</label>
+            <select id="doencaRelacionadaTrabalho">
+              <option value="">Selecione</option>
+              <option value="SIM">Sim</option>
+              <option value="NAO">Não</option>
+              <option value="IGNORADO">Ignorado</option>
+            </select>
+          </div>
+        </div>
+        <div class="linha">
+            <div class="campo">
+              <label for="ufLocalInfeccao">UF do local provável de infecção</label>
+              <input type="text" id="ufLocalInfeccao" maxlength="2">
+            </div>
+            <div class="campo">
+              <label for="paisLocalInfeccao">País do local provável de infecção</label>
+              <input type="text" id="paisLocalInfeccao">
+            </div>
+            <div class="campo">
+              <label for="municipioLocalInfeccao">Município do local provável de infecção</label>
+              <input type="text" id="municipioLocalInfeccao">
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo">
+              <label for="distritoLocalInfeccao">Distrito do local provável de infecção</label>
+              <input type="text" id="distritoLocalInfeccao">
+            </div>
+            <div class="campo">
+              <label for="bairroLocalInfeccao">Bairro do local provável de infecção</label>
+              <input type="text" id="bairroLocalInfeccao">
+            </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
             <label for="evolucaoCaso">Evolução do caso</label>
             <input type="text" id="evolucaoCaso">
           </div>
