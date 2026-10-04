@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>SINAN - Consulta de Notificações</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>SINAN — Consulta de Notificações</h1>
+    <nav>
+      <a href="cadastro.html">+ Nova notificação</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="mensagem"></div>
+
+    <fieldset>
+      <legend>Filtros</legend>
+      <form id="form-filtros">
+        <div class="linha">
+          <div class="campo">
+            <label for="f-agravo">Agravo/doença</label>
+            <input type="text" id="f-agravo" name="agravo">
+          </div>
+          <div class="campo">
+            <label for="f-nomePaciente">Nome do paciente</label>
+            <input type="text" id="f-nomePaciente" name="nomePaciente">
+          </div>
+          <div class="campo">
+            <label for="f-ufResidencia">UF de residência</label>
+            <input type="text" id="f-ufResidencia" name="ufResidencia" maxlength="2">
+          </div>
+          <div class="campo">
+            <label for="f-municipioNotificacao">Município de notificação</label>
+            <input type="text" id="f-municipioNotificacao" name="municipioNotificacao">
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="f-sexo">Sexo</label>
+            <select id="f-sexo" name="sexo">
+              <option value="">Todos</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+              <option value="IGNORADO">Ignorado</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-dataInicio">Data notificação (início)</label>
+            <input type="date" id="f-dataInicio" name="dataNotificacaoInicio">
+          </div>
+          <div class="campo">
+            <label for="f-dataFim">Data notificação (fim)</label>
+            <input type="date" id="f-dataFim" name="dataNotificacaoFim">
+          </div>
+          <div class="campo">
+            <label for="f-ordenarPor">Ordenar por</label>
+            <select id="f-ordenarPor" name="ordenarPor">
+              <option value="id">Id</option>
+              <option value="agravo">Agravo</option>
+              <option value="dataNotificacao">Data da notificação</option>
+              <option value="ufNotificacao">UF de notificação</option>
+              <option value="municipioNotificacao">Município de notificação</option>
+            </select>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="f-ordem">Ordem</label>
+            <select id="f-ordem" name="ordem">
+              <option value="ASC">Crescente</option>
+              <option value="DESC">Decrescente</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-tamanho">Itens por página</label>
+            <select id="f-tamanho" name="tamanho">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label class="rotulo-simples">&nbsp;</label>
+            <label class="checkbox-linha">
+              <input type="checkbox" id="f-duplicadas" name="duplicadas">
+              Somente notificações duplicadas (RN01)
+            </label>
+          </div>
+        </div>
+        <div class="acoes-form">
+          <button type="submit" class="btn-primario">Filtrar</button>
+          <button type="button" id="btn-limpar" class="btn-secundario">Limpar filtros</button>
+        </div>
+      </form>
+    </fieldset>
+
+    <table id="tabela-notificacoes">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Agravo</th>
+          <th>Paciente</th>
+          <th>Data notificação</th>
+          <th>Município/UF notificação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="corpo-tabela">
+        <tr><td colspan="6" class="vazio">Carregando...</td></tr>
+      </tbody>
+    </table>
+
+    <div class="paginacao" id="paginacao" style="display:none;">
+      <button id="btn-anterior" class="btn-secundario">&laquo; Anterior</button>
+      <span id="info-pagina"></span>
+      <button id="btn-proxima" class="btn-secundario">Próxima &raquo;</button>
+    </div>
+  </main>
+
+  <script type="module" src="js/consulta.js"></script>
+</body>
+</html>
