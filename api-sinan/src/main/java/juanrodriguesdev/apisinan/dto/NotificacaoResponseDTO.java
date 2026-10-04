@@ -1,11 +1,13 @@
 package juanrodriguesdev.apisinan.dto;
 
 import juanrodriguesdev.apisinan.model.Notificacao;
+import juanrodriguesdev.apisinan.model.TipoNotificacao;
 
 import java.time.LocalDate;
 
 public record NotificacaoResponseDTO(
         Long id,
+        TipoNotificacao tipoNotificacao,
         String agravo,
         LocalDate dataNotificacao,
         String ufNotificacao,
@@ -19,6 +21,7 @@ public record NotificacaoResponseDTO(
     public static NotificacaoResponseDTO fromEntity(Notificacao n) {
         return new NotificacaoResponseDTO(
                 n.getId(),
+                n.getTipoNotificacao(),
                 n.getAgravo(),
                 n.getDataNotificacao(),
                 n.getUfNotificacao(),

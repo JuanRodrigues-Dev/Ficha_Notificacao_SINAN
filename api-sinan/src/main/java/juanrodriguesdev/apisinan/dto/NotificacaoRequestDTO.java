@@ -3,10 +3,14 @@ package juanrodriguesdev.apisinan.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import juanrodriguesdev.apisinan.model.TipoNotificacao;
 
 import java.time.LocalDate;
 
 public record NotificacaoRequestDTO(
+        @NotNull(message = "O tipo de notificação é obrigatório")
+        TipoNotificacao tipoNotificacao,
+
         @NotBlank(message = "O agravo/doença é obrigatório")
         String agravo,
 

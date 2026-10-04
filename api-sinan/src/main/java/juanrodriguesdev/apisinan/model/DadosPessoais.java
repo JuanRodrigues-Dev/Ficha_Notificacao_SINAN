@@ -31,7 +31,11 @@ public class DadosPessoais {
     private Sexo sexo;
     @Enumerated(EnumType.STRING)
     private Gestante gestante;
-
+    @Enumerated(EnumType.STRING)
+    private RacaCor racaCor;
+    @Enumerated(EnumType.STRING)
+    private Escolaridade escolaridade;
+    private String numeroCartaoSus;
     private String nomeMae;
 
 }

@@ -132,6 +132,7 @@ public class NotificacaoService {
 
     private Notificacao toEntity(NotificacaoRequestDTO dto) {
         Notificacao notificacao = new Notificacao();
+        notificacao.setTipoNotificacao(dto.tipoNotificacao());
         notificacao.setAgravo(dto.agravo());
         notificacao.setDataNotificacao(dto.dataNotificacao());
         notificacao.setUfNotificacao(dto.ufNotificacao());
@@ -152,6 +153,9 @@ public class NotificacaoService {
         dp.setIdade(dto.idade());
         dp.setSexo(dto.sexo());
         dp.setGestante(dto.gestante());
+        dp.setRacaCor(dto.racaCor());
+        dp.setEscolaridade(dto.escolaridade());
+        dp.setNumeroCartaoSus(dto.numeroCartaoSus());
         dp.setNomeMae(dto.nomeMae());
         return dp;
     }
@@ -168,6 +172,10 @@ public class NotificacaoService {
         dr.setComplemento(dto.complemento());
         dr.setCep(dto.cep());
         dr.setTelefone(dto.telefone());
+        dr.setGeoCampo1(dto.geoCampo1());
+        dr.setGeoCampo2(dto.geoCampo2());
+        dr.setPontoReferencia(dto.pontoReferencia());
+        dr.setZona(dto.zona());
         return dr;
     }
 

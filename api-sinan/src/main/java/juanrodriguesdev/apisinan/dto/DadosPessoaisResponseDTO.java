@@ -1,8 +1,6 @@
 package juanrodriguesdev.apisinan.dto;
 
-import juanrodriguesdev.apisinan.model.DadosPessoais;
-import juanrodriguesdev.apisinan.model.Gestante;
-import juanrodriguesdev.apisinan.model.Sexo;
+import juanrodriguesdev.apisinan.model.*;
 
 import java.time.LocalDate;
 
@@ -14,6 +12,9 @@ public record DadosPessoaisResponseDTO(
         Integer idade,
         Sexo sexo,
         Gestante gestante,
+        RacaCor racaCor,
+        Escolaridade escolaridade,
+        String numeroCartaoSus,
         String nomeMae
 ) {
     public static  DadosPessoaisResponseDTO fromEntity(DadosPessoais dp){
@@ -25,6 +26,9 @@ public record DadosPessoaisResponseDTO(
                 dp.getIdade(),
                 dp.getSexo(),
                 dp.getGestante(),
+                dp.getRacaCor(),
+                dp.getEscolaridade(),
+                dp.getNumeroCartaoSus(),
                 dp.getNomeMae()
         );
     }

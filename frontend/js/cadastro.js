@@ -60,6 +60,7 @@ function montarInvestigador() {
 
 function montarDtoDoFormulario() {
   return {
+    tipoNotificacao: valorCampo("tipoNotificacao"),
     agravo: valorCampo("agravo"),
     dataNotificacao: valorCampo("dataNotificacao"),
     ufNotificacao: valorCampo("ufNotificacao"),
@@ -72,6 +73,9 @@ function montarDtoDoFormulario() {
       idade: valorNumerico("idade"),
       sexo: valorCampo("sexo"),
       gestante: valorCampo("gestante"),
+      racaCor: valorCampo("racaCor"),
+      escolaridade: valorCampo("escolaridade"),
+      numeroCartaoSus: valorCampo("numeroCartaoSus"),
       nomeMae: valorCampo("nomeMae"),
     },
     dadosResidencia: {
@@ -82,6 +86,10 @@ function montarDtoDoFormulario() {
       bairro: valorCampo("bairro"),
       logradouro: valorCampo("logradouro"),
       numero: valorCampo("numero"),
+      geoCampo1: valorCampo("geoCampo1"),
+      geoCampo2: valorCampo("geoCampo2"),
+      pontoReferencia: valorCampo("pontoReferencia"),
+      zona: valorCampo("zona"),
       complemento: valorCampo("complemento"),
       cep: valorCampo("cep"),
       telefone: valorCampo("telefone"),
@@ -93,6 +101,7 @@ function montarDtoDoFormulario() {
 
 /** Preenche o formulário com os dados de uma notificação existente (modo edição). */
 function preencherFormulario(n) {
+  document.getElementById("tipoNotificacao").value = n.tipoNotificacao ?? "";
   document.getElementById("agravo").value = n.agravo ?? "";
   document.getElementById("dataNotificacao").value = n.dataNotificacao ?? "";
   document.getElementById("ufNotificacao").value = n.ufNotificacao ?? "";
@@ -106,6 +115,9 @@ function preencherFormulario(n) {
   document.getElementById("idade").value = dp.idade ?? "";
   document.getElementById("sexo").value = dp.sexo ?? "";
   document.getElementById("gestante").value = dp.gestante ?? "";
+  document.getElementById("racaCor").value = dp.racaCor ?? "";
+  document.getElementById("escolaridade").value = dp.escolaridade ?? "";
+  document.getElementById("numeroCartaoSus").value = dp.numeroCartaoSus ?? "";
   document.getElementById("nomeMae").value = dp.nomeMae ?? "";
 
   const dr = n.dadosResidencia ?? {};
@@ -116,6 +128,10 @@ function preencherFormulario(n) {
   document.getElementById("bairro").value = dr.bairro ?? "";
   document.getElementById("logradouro").value = dr.logradouro ?? "";
   document.getElementById("numero").value = dr.numero ?? "";
+  document.getElementById("geoCampo1").value = dr.geoCampo1 ?? "";
+  document.getElementById("geoCampo2").value = dr.geoCampo2 ?? "";
+  document.getElementById("pontoReferencia").value = dr.pontoReferencia ?? "";
+  document.getElementById("zona").value = dr.zona ?? "";
   document.getElementById("complemento").value = dr.complemento ?? "";
   document.getElementById("cep").value = dr.cep ?? "";
   document.getElementById("telefone").value = dr.telefone ?? "";

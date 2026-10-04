@@ -1,5 +1,7 @@
 package juanrodriguesdev.apisinan.dto;
 
+import juanrodriguesdev.apisinan.model.Zona;
+
 public record DadosResidenciaRequestDTO(
         String ufResidencia,
         String municipioResidencia,
@@ -10,6 +12,10 @@ public record DadosResidenciaRequestDTO(
         String numero,
         String complemento,
         String cep,
-        String telefone
+        String telefone,
+        String geoCampo1,
+        String geoCampo2,
+        String pontoReferencia,
+        Zona zona
 ) {
 }
