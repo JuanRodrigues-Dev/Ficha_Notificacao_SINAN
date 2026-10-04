@@ -9,7 +9,8 @@ import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
 import juanrodriguesdev.apisinan.specification.NotificacaoSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -59,9 +60,9 @@ public class NotificacaoService {
         return repository.findAll();
     }
 
-    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
+    public Page<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
                                     String municipioNotificacao, Sexo sexo, LocalDate dataNotificacaoInicio,
-                                    LocalDate dataNotificacaoFim) {
+                                    LocalDate dataNotificacaoFim, Pageable  pageable) {
         Specification<Notificacao> spec = Specification.<Notificacao>unrestricted()
                 .and(NotificacaoSpecification.comAgravo(agravo))
                 .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
@@ -70,7 +71,7 @@ public class NotificacaoService {
                 .and(NotificacaoSpecification.comSexo(sexo))
                 .and(NotificacaoSpecification.comDataNotificacaoEntre(dataNotificacaoInicio, dataNotificacaoFim));
 
-        return repository.findAll(spec);
+        return repository.findAll(spec, pageable);
     }
 
     // ---------- RN01: duplicidade ----------
