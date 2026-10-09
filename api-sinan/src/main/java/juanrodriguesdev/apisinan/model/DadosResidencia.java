@@ -27,4 +27,10 @@ public class DadosResidencia {
     private String complemento;
     private String cep;
     private String telefone;
+    private String geoCampo1;
+    private String geoCampo2;
+    private String pontoReferencia;
+
+    @Enumerated(EnumType.STRING)
+    private Zona zona;
 }

@@ -20,6 +20,9 @@ public class Notificacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "O tipo de notificação é obrigatório")
+    private TipoNotificacao tipoNotificacao;
 
     @NotBlank(message = "O agravo/doença é obrigatório")
     private String agravo;

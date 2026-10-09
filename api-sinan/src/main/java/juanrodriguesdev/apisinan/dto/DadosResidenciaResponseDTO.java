@@ -1,6 +1,7 @@
 package juanrodriguesdev.apisinan.dto;
 
 import juanrodriguesdev.apisinan.model.DadosResidencia;
+import juanrodriguesdev.apisinan.model.Zona;
 
 public record DadosResidenciaResponseDTO(
         Long id,
@@ -13,7 +14,11 @@ public record DadosResidenciaResponseDTO(
         String numero,
         String complemento,
         String cep,
-        String telefone
+        String telefone,
+        String geoCampo1,
+        String geoCampo2,
+        String pontoReferencia,
+        Zona zona
 ) {
     public static DadosResidenciaResponseDTO fromEntity(DadosResidencia dr) {
         return new DadosResidenciaResponseDTO(
@@ -27,7 +32,11 @@ public record DadosResidenciaResponseDTO(
                 dr.getNumero(),
                 dr.getComplemento(),
                 dr.getCep(),
-                dr.getTelefone()
+                dr.getTelefone(),
+                dr.getGeoCampo1(),
+                dr.getGeoCampo2(),
+                dr.getPontoReferencia(),
+                dr.getZona()
         );
     }
 }

@@ -9,7 +9,8 @@ import juanrodriguesdev.apisinan.repository.NotificacaoRepository;
 import juanrodriguesdev.apisinan.specification.NotificacaoSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -59,9 +60,9 @@ public class NotificacaoService {
         return repository.findAll();
     }
 
-    public List<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
+    public Page<Notificacao> listar(String agravo, String nomePaciente, String ufResidencia,
                                     String municipioNotificacao, Sexo sexo, LocalDate dataNotificacaoInicio,
-                                    LocalDate dataNotificacaoFim) {
+                                    LocalDate dataNotificacaoFim, Pageable  pageable) {
         Specification<Notificacao> spec = Specification.<Notificacao>unrestricted()
                 .and(NotificacaoSpecification.comAgravo(agravo))
                 .and(NotificacaoSpecification.comNomePaciente(nomePaciente))
@@ -70,7 +71,7 @@ public class NotificacaoService {
                 .and(NotificacaoSpecification.comSexo(sexo))
                 .and(NotificacaoSpecification.comDataNotificacaoEntre(dataNotificacaoInicio, dataNotificacaoFim));
 
-        return repository.findAll(spec);
+        return repository.findAll(spec, pageable);
     }
 
     // ---------- RN01: duplicidade ----------
@@ -131,6 +132,7 @@ public class NotificacaoService {
 
     private Notificacao toEntity(NotificacaoRequestDTO dto) {
         Notificacao notificacao = new Notificacao();
+        notificacao.setTipoNotificacao(dto.tipoNotificacao());
         notificacao.setAgravo(dto.agravo());
         notificacao.setDataNotificacao(dto.dataNotificacao());
         notificacao.setUfNotificacao(dto.ufNotificacao());
@@ -151,6 +153,9 @@ public class NotificacaoService {
         dp.setIdade(dto.idade());
         dp.setSexo(dto.sexo());
         dp.setGestante(dto.gestante());
+        dp.setRacaCor(dto.racaCor());
+        dp.setEscolaridade(dto.escolaridade());
+        dp.setNumeroCartaoSus(dto.numeroCartaoSus());
         dp.setNomeMae(dto.nomeMae());
         return dp;
     }
@@ -167,6 +172,10 @@ public class NotificacaoService {
         dr.setComplemento(dto.complemento());
         dr.setCep(dto.cep());
         dr.setTelefone(dto.telefone());
+        dr.setGeoCampo1(dto.geoCampo1());
+        dr.setGeoCampo2(dto.geoCampo2());
+        dr.setPontoReferencia(dto.pontoReferencia());
+        dr.setZona(dto.zona());
         return dr;
     }
 
@@ -175,6 +184,13 @@ public class NotificacaoService {
         c.setDataInvestigacao(dto.dataInvestigacao());
         c.setClassificacaoFinal(dto.classificacaoFinal());
         c.setCriterioConfirmacao(dto.criterioConfirmacao());
+        c.setAutoctone(dto.autoctone());
+        c.setUfLocalInfeccao(dto.ufLocalInfeccao());
+        c.setPaisLocalInfeccao(dto.paisLocalInfeccao());
+        c.setMunicipioLocalInfeccao(dto.municipioLocalInfeccao());
+        c.setDistritoLocalInfeccao(dto.distritoLocalInfeccao());
+        c.setBairroLocalInfeccao(dto.bairroLocalInfeccao());
+        c.setDoencaRelacionadaTrabalho(dto.doencaRelacionadaTrabalho());
         c.setEvolucaoCaso(dto.evolucaoCaso());
         c.setDataObito(dto.dataObito());
         c.setDataEncerramento(dto.dataEncerramento());

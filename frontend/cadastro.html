@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>SINAN - Cadastro de Notificação</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1 id="titulo-pagina">SINAN — Nova Notificação</h1>
+    <nav>
+      <a href="index.html">&larr; Voltar para consulta</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="mensagem"></div>
+
+    <form id="form-notificacao">
+      <input type="hidden" id="id-notificacao">
+
+      <fieldset>
+        <legend>1. Dados Gerais</legend>
+         <div class="linha">
+            <div class="campo">
+              <label for="tipoNotificacao">Tipo de notificação <span class="obrigatorio">*</span></label>
+              <select id="tipoNotificacao" required>
+                <option value="">Selecione</option>
+                <option value="NEGATIVA">Negativa</option>
+                <option value="INDIVIDUAL" selected>Individual</option>
+                <option value="SURTO">Surto</option>
+                <option value="TRACOMA">Tracoma</option>
+              </select>
+            </div>
+          </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="agravo">Agravo/doença <span class="obrigatorio">*</span></label>
+            <input type="text" id="agravo" required>
+          </div>
+          <div class="campo">
+            <label for="dataNotificacao">Data da notificação <span class="obrigatorio">*</span></label>
+            <input type="date" id="dataNotificacao" required>
+          </div>
+          <div class="campo">
+            <label for="ufNotificacao">UF de notificação <span class="obrigatorio">*</span></label>
+            <input type="text" id="ufNotificacao" maxlength="2" required>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="municipioNotificacao">Município de notificação <span class="obrigatorio">*</span></label>
+            <input type="text" id="municipioNotificacao" required>
+          </div>
+          <div class="campo">
+            <label for="unidadeSaude">Unidade de saúde <span class="obrigatorio">*</span></label>
+            <input type="text" id="unidadeSaude" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Notificação Individual (Dados Pessoais)</legend>
+        <div class="linha">
+          <div class="campo">
+            <label for="nomePaciente">Nome do paciente <span class="obrigatorio">*</span></label>
+            <input type="text" id="nomePaciente" required>
+          </div>
+          <div class="campo">
+            <label for="dataPrimeiroSintomas">Data dos primeiros sintomas</label>
+            <input type="date" id="dataPrimeiroSintomas">
+          </div>
+          <div class="campo">
+            <label for="dataNascimento">Data de nascimento</label>
+            <input type="date" id="dataNascimento">
+          </div>
+          <div class="campo">
+            <label for="idade">Idade (apenas se a data de nascimento for desconhecida)</label>
+            <input type="number" id="idade" min="0">
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="sexo">Sexo <span class="obrigatorio">*</span></label>
+            <select id="sexo" required>
+              <option value="">Selecione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+              <option value="IGNORADO">Ignorado</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="gestante">Gestante (obrigatório se sexo = feminino)</label>
+            <select id="gestante">
+              <option value="">Selecione</option>
+              <option value="SIM">Sim</option>
+              <option value="NAO">Não</option>
+              <option value="NAO_SE_APLICA">Não se aplica</option>
+              <option value="IGNORADO">Ignorado</option>
+            </select>
+          </div>
+          <div class="campo">
+                <label for="racaCor">Raça/Cor</label>
+                <select id="racaCor">
+                  <option value="">Selecione</option>
+                  <option value="BRANCA">Branca</option>
+                  <option value="PRETA">Preta</option>
+                  <option value="AMARELA">Amarela</option>
+                  <option value="PARDA">Parda</option>
+                  <option value="INDIGENA">Indígena</option>
+                  <option value="IGNORADO">Ignorado</option>
+                </select>
+          </div>
+          <div class="campo">
+            <label for="escolaridade">Escolaridade</label>
+            <select id="escolaridade">
+              <option value="">Selecione</option>
+              <option value="ANALFABETO">Analfabeto</option>
+              <option value="FUNDAMENTAL_1_INCOMPLETO">Fundamental 1 incompleto</option>
+              <option value="FUNDAMENTAL_1_COMPLETO">Fundamental 1 completo</option>
+              <option value="FUNDAMENTAL_2_INCOMPLETO">Fundamental 2 incompleto</option>
+              <option value="FUNDAMENTAL_2_COMPLETO">Fundamental 2 completo</option>
+              <option value="MEDIO_INCOMPLETO">Médio incompleto</option>
+              <option value="MEDIO_COMPLETO">Médio completo</option>
+              <option value="SUPERIOR_INCOMPLETO">Superior incompleto</option>
+              <option value="SUPERIOR_COMPLETO">Superior completo</option>
+              <option value="IGNORADO">Ignorado</option>
+              <option value="NAO_SE_APLICA">Não se aplica</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="numeroCartaoSus">Número do Cartão SUS</label>
+            <input type="text" id="numeroCartaoSus">
+          </div>
+          <div class="campo">
+            <label for="nomeMae">Nome da mãe</label>
+            <input type="text" id="nomeMae">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Dados de Residência</legend>
+        <div class="linha">
+          <div class="campo">
+            <label for="ufResidencia">UF de residência (obrigatória se reside no Brasil)</label>
+            <input type="text" id="ufResidencia" maxlength="2">
+          </div>
+          <div class="campo">
+            <label for="municipioResidencia">Município de residência (obrigatório se UF informada)</label>
+            <input type="text" id="municipioResidencia">
+          </div>
+          <div class="campo">
+            <label for="paisResidencia">País de residência (obrigatório se reside fora do Brasil)</label>
+            <input type="text" id="paisResidencia">
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="distrito">Distrito</label>
+            <input type="text" id="distrito">
+          </div>
+          <div class="campo">
+            <label for="bairro">Bairro</label>
+            <input type="text" id="bairro">
+          </div>
+          <div class="campo">
+            <label for="logradouro">Logradouro</label>
+            <input type="text" id="logradouro">
+          </div>
+          <div class="campo">
+            <label for="numero">Número</label>
+            <input type="text" id="numero">
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+              <label for="geoCampo1">Geo campo 1</label>
+              <input type="text" id="geoCampo1">
+            </div>
+            <div class="campo">
+              <label for="geoCampo2">Geo campo 2</label>
+              <input type="text" id="geoCampo2">
+            </div>
+            <div class="campo">
+              <label for="pontoReferencia">Ponto de referência</label>
+              <input type="text" id="pontoReferencia">
+            </div>
+            <div class="campo">
+              <label for="zona">Zona</label>
+              <select id="zona">
+                <option value="">Selecione</option>
+                <option value="URBANA">Urbana</option>
+                <option value="RURAL">Rural</option>
+                <option value="PERIURBANA">Periurbana</option>
+                <option value="IGNORADO">Ignorado</option>
+              </select>
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="complemento">Complemento</label>
+            <input type="text" id="complemento">
+          </div>
+          <div class="campo">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep">
+          </div>
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>4. Conclusão (opcional)</legend>
+        <div class="linha">
+          <div class="campo">
+            <label for="dataInvestigacao">Data da investigação</label>
+            <input type="date" id="dataInvestigacao">
+          </div>
+          <div class="campo">
+            <label for="classificacaoFinal">Classificação final</label>
+            <input type="text" id="classificacaoFinal">
+          </div>
+          <div class="campo">
+            <label for="criterioConfirmacao">Critério de confirmação</label>
+            <input type="text" id="criterioConfirmacao">
+          </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="autoctone">O caso é autóctone do município de residência?</label>
+            <select id="autoctone">
+              <option value="">Selecione</option>
+              <option value="SIM">Sim</option>
+              <option value="NAO">Não</option>
+              <option value="INDETERMINADO">Indeterminado</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="doencaRelacionadaTrabalho">Doença relacionada ao trabalho?</label>
+            <select id="doencaRelacionadaTrabalho">
+              <option value="">Selecione</option>
+              <option value="SIM">Sim</option>
+              <option value="NAO">Não</option>
+              <option value="IGNORADO">Ignorado</option>
+            </select>
+          </div>
+        </div>
+        <div class="linha">
+            <div class="campo">
+              <label for="ufLocalInfeccao">UF do local provável de infecção</label>
+              <input type="text" id="ufLocalInfeccao" maxlength="2">
+            </div>
+            <div class="campo">
+              <label for="paisLocalInfeccao">País do local provável de infecção</label>
+              <input type="text" id="paisLocalInfeccao">
+            </div>
+            <div class="campo">
+              <label for="municipioLocalInfeccao">Município do local provável de infecção</label>
+              <input type="text" id="municipioLocalInfeccao">
+            </div>
+          </div>
+          <div class="linha">
+            <div class="campo">
+              <label for="distritoLocalInfeccao">Distrito do local provável de infecção</label>
+              <input type="text" id="distritoLocalInfeccao">
+            </div>
+            <div class="campo">
+              <label for="bairroLocalInfeccao">Bairro do local provável de infecção</label>
+              <input type="text" id="bairroLocalInfeccao">
+            </div>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <label for="evolucaoCaso">Evolução do caso</label>
+            <input type="text" id="evolucaoCaso">
+          </div>
+          <div class="campo">
+            <label for="dataObito">Data do óbito</label>
+            <input type="date" id="dataObito">
+          </div>
+          <div class="campo">
+            <label for="dataEncerramento">Data do encerramento</label>
+            <input type="date" id="dataEncerramento">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>5. Investigador (opcional)</legend>
+        <div class="linha">
+          <div class="campo">
+            <label for="codUnidadeSaude">Código da unidade de saúde</label>
+            <input type="text" id="codUnidadeSaude">
+          </div>
+          <div class="campo">
+            <label for="municipioUnidadeSaude">Município/unidade de saúde</label>
+            <input type="text" id="municipioUnidadeSaude">
+          </div>
+          <div class="campo">
+            <label for="nomeInvestigador">Nome do investigador</label>
+            <input type="text" id="nomeInvestigador">
+          </div>
+          <div class="campo">
+            <label for="funcao">Função</label>
+            <input type="text" id="funcao">
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="acoes-form">
+        <button type="submit" class="btn-primario" id="btn-salvar">Salvar</button>
+        <a href="index.html"><button type="button" class="btn-secundario">Cancelar</button></a>
+      </div>
+    </form>
+  </main>
+
+  <script type="module" src="js/cadastro.js"></script>
+</body>
+</html>
